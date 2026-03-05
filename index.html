@@ -115,6 +115,15 @@
                 flex-direction: column;
             }
         }
+
+        ol button {
+            margin-left: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            cursor: pointer;    
+        }
     </style>
 </head>
 
@@ -150,14 +159,16 @@
         </p>
 
           <h3>Benefits of New Technology</h3>
-        <ol>
-            <li>Better job and career opportunities</li>
-            <li>Improves problem-solving skills</li>
-            <li>Increases creativity and innovation</li>
-             <li>Saves time and makes work easier</li>
-              <li>Connects people globally</li>
-               
+         <ol id="benefitList">
+        <li>Better job and career opportunities <button onclick="deleteItem(this)">Delete</button></li>
+         <li>Improves problem-solving skills <button onclick="deleteItem(this)">Delete</button></li>
+        <li>Increases creativity and innovation <button onclick="deleteItem(this)">Delete</button></li>
+        <li>Saves time and makes work easier <button onclick="deleteItem(this)">Delete</button></li>
+        <li>Connects people globally <button onclick="deleteItem(this)">Delete</button></li>
         </ol>
+
+        <input type="text" id="benefitInput" placeholder="Add new benefit">
+        <button onclick="addBenefit()">Add Benefit</button>
     </section>
 
    
@@ -197,11 +208,12 @@
     <section id="contact">
         <h2>Contact Me</h2>
 
-        <form>
+        <form onsubmit="submitForm(event)">
             <input type="text" placeholder="Your Name" required>
             <input type="email" placeholder="Your Email" required>
             <textarea rows="5" placeholder="Your Message" required></textarea>
             <button type="submit">Submit</button>
+            
         </form>
     </section>
 
@@ -209,8 +221,64 @@
         <p>Connect with me:</p>
         <a href="#">LinkedIn</a> |
         <a href="#">GitHub</a>
+        <p id="dateTime"></p>
         <p>© 2026 Bhoomi Gupta. All Rights Reserved.</p>
     </footer>
+
+    <script>
+
+// Add new benefit
+function addBenefit() {
+
+    let input = document.getElementById("benefitInput");
+    let text = input.value;
+
+    if(text === "") return;
+
+    let li = document.createElement("li");
+    li.innerHTML = text + ' <button onclick="deleteItem(this)">Delete</button>';
+
+    document.getElementById("benefitList").appendChild(li);
+
+    input.value = "";
+}
+
+// Delete item
+function deleteItem(button){
+    button.parentElement.remove();
+}
+
+// Form alert
+function submitForm(event){
+    event.preventDefault();
+    alert("Thank you! Your message has been submitted.");
+}
+
+// Show Date and Time
+function updateDateTime(){
+    let now = new Date();
+
+    let options = {
+        weekday: 'long',
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+    };
+
+    let date = now.toLocaleDateString('en-IN', options);
+    let time = now.toLocaleTimeString('en-IN');
+
+    document.getElementById("dateTime").innerHTML =
+        "Current Date & Time: " + date + ", " + time;
+}
+
+setInterval(updateDateTime,1000);
+
+function deleteItem(button) {
+    button.parentElement.remove();
+}
+
+</script>
 
 </body>
 </html>
